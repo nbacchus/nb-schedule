@@ -6,9 +6,9 @@ var currentHour = moment().format("HH");
 //checks current time to change color
 $(".timeReader").each(function () {
 var timeReader = $(this).attr("id").split("-")[1];
-    if (currentHour == timeReader) {
+    if (currentHour === timeReader) {
       $(this).addClass("present");
-      $(this).children("description").addClass("white-text");
+      $(this).children("description");
     } else if (currentHour < timeReader) {
       $(this).removeClass("present");
       $(this).addClass("future");
