@@ -2,15 +2,27 @@
 var currentTime = moment().format("MMMM Do YYYY");
 $("#currentDay").text(currentTime)
 var currentHour = moment().hours();
-console.log(currentHour)
+console.log(currentHour);
 
 //checks current time to change color
-var timeReader =  document.getElementsByClassName("hour")
+var timeReader =  document.querySelectorAll(".hour")
+console.log(timeReader)
 timeReader.forEach(timeBlock => {
-    var timeID = timeBlock.getAttribute("id")
-    timeID = parseInt(timeID)
-    console.log(timeID)
-});   
+    var timeID = timeBlock.getAttribute("id");
+    timeID = parseInt(timeID);
+    console.log(timeID);
+
+        if (timeID == currentHour) {
+            $(this).addClass("present");
+            $(this).children(".description").addClass("white-text");
+          } else if (timeID < currentHour) {
+            $(this).removeClass("present");
+            $(this).addClass("future");
+          } else if (timeID > currentHour) {
+            $(this).removeClass("future");
+            $(this).addClass("past");
+          }
+});
 
 //click on description to change
 $(".col-9").on("click", function() {
@@ -23,16 +35,3 @@ $(".col-9").on("click", function() {
 
      textInput.trigger("focus");
    });
-
-   //save in local storage
-   var storage = localStorage.getItem(timeID)
-console.log(storage)
-timeBlock.children[1].value = storage // children [1] is the textarea in each div//
-
- timeBlock.children[2].addEventListener("click", function(){ // children [2] is the the save btn//
-    console.log("click")
-
-    var text = timeBlock.children[1].value;
-    console.log(text)
-    localStorage.setItem(timeID , text)
-});
