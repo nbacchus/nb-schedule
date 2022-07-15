@@ -1,22 +1,16 @@
 //link current time and day with moment.js
-var currentTime = moment().format("MMM Do YY");
+var currentTime = moment().format("MMMM Do YYYY");
 $("#currentDay").text(currentTime)
-var currentHour = moment().format("HH");
+var currentHour = moment().hours();
+console.log(currentHour)
 
 //checks current time to change color
-$(".timeReader").each(function () {
-var timeReader = $(this).attr("id").split("-")[1];
-    if (currentHour === timeReader) {
-      $(this).addClass("present");
-      $(this).children("description");
-    } else if (currentHour < timeReader) {
-      $(this).removeClass("present");
-      $(this).addClass("future");
-    } else if (currentHour > timeReader) {
-      $(this).removeClass("future");
-      $(this).addClass("past");
-    }
-});
+var timeReader =  document.getElementsByClassName("hour")
+timeReader.forEach(timeBlock => {
+    var timeID = timeBlock.getAttribute("id")
+    timeID = parseInt(timeID)
+    console.log(timeID)
+});   
 
 //click on description to change
 $(".col-9").on("click", function() {
@@ -31,9 +25,14 @@ $(".col-9").on("click", function() {
    });
 
    //save in local storage
-   $(".saveBtn").click(function (event) {
-    event.preventDefault();
-    var value = $(this).siblings(".time-block").val();
-    var time = $(this).parent().attr("id").split("-")[1];
-    localStorage.setItem(time, value);
-  });
+   var storage = localStorage.getItem(timeID)
+console.log(storage)
+timeBlock.children[1].value = storage // children [1] is the textarea in each div//
+
+ timeBlock.children[2].addEventListener("click", function(){ // children [2] is the the save btn//
+    console.log("click")
+
+    var text = timeBlock.children[1].value;
+    console.log(text)
+    localStorage.setItem(timeID , text)
+});
